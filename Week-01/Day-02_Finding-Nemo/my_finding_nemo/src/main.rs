@@ -60,7 +60,30 @@ fn find_nemo(s: String){
 
 
 
-
+    // Searching line: I'm trying to find Nemo !
+    // I found Nemo at 5
+    
+    // Searching line: I'm trying to find Dory !
+    // I wasn't able to find Nemo :(
+    
+    // Searching line: Nemo is trying to find Dory !
+    // I found Nemo at 1
+    
+    // Searching line: Nemo is trying to find Nemo !
+    // I found Nemo at 1
+    
+    // Searching line: Nemod is trying to find Nemo !
+    // I found Nemo at 6
+    
+    // Searching line: To find Nemo I must !
+    // I found Nemo at 3
+    
+    // Searching line: I'm not Nemo, Nemo is Nemo !
+    // I found Nemo at 4
+    
+    // PS N:\100-Days-Of-Rust\Week-01\Day-02_Finding-Nemo\my_finding_nemo> date
+    
+    // Tuesday, 2 January 2024 2:49:05 PM
 
 
 

@@ -1,24 +1,23 @@
 fn main() {
-    let nemo_string:String = "I'm trying to find Nemo !".to_string();
-    let nemo_string1:String = "I'm trying to find Dory !".to_string();
-    let nemo_string2:String = "Nemo is trying to find Dory !".to_string();
-    let nemo_string3:String = "Nemo is trying to find Nemo !".to_string();
-    let nemo_string4:String = "Nemod is trying to find Nemo !".to_string();
-    let nemo_string5:String = "To find Nemo I must !".to_string();
-    let nemo_string6:String = "I'm not Nemo, Nemo is Nemo !".to_string();
 
-    find_nemo(&nemo_string);
-    find_nemo(&nemo_string1);
-    find_nemo(&nemo_string2);
-    find_nemo(&nemo_string3);
-    find_nemo(&nemo_string4);
-    find_nemo(&nemo_string5);
-    find_nemo(&nemo_string6);
+    let nemo_strings: [&str; 7] = [
+        "I'm trying to find Nemo !",
+        "I'm trying to find Dory !",
+        "Nemo is trying to find Dory !",
+        "Nemo is trying to find Nemo !",
+        "Nemod is trying to find Nemo !",
+        "To find Nemo I must !",
+        "I'm not Nemo, Nemo is Nemo !",
+    ];
+
+    for nemo_string in &nemo_strings {
+        find_nemo(nemo_string);
+    }
 }
 
 
 
-fn find_nemo(s: &String){
+fn find_nemo(s: &str){
     println!("Searching line: {}", s);
 
     let nemo = "Nemo";

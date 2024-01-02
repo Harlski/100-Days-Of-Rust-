@@ -39,7 +39,7 @@ fn find_nemo(s: &str){
     println!("");
     // dbg!(collection); 
 }
-
+    // Harley' Notes:
     // Initially I had intended to search for Nemo in Bytes, while probably still a valid option - though research pointed 
     // me towards spliting the passed string by "spaces" and then adding these to a collection - which I know as just a standard array 
     // then comparing my search word, in this case "Nemo" to each item in the Vector.
@@ -58,7 +58,7 @@ fn find_nemo(s: &str){
     // The 32 check ensures previous and preceeding characters are spaces and result actually is Nemo 
 
 
-
+    // RESULTS:
     // Searching line: I'm trying to find Nemo !
     // I found Nemo at 5
     
@@ -86,6 +86,7 @@ fn find_nemo(s: &str){
 
 
 
+    // CHALLENGE INFO:
     // ## Finding Nemo
 
     // You're given a string of words. You need to find the word "Nemo", and return a string like this: `I found Nemo at [the order of the word you find nemo]!`.

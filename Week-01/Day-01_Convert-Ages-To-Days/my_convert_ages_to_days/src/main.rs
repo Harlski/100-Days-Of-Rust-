@@ -22,7 +22,7 @@ fn calc_age(u_age: u32){
 }
 
 
-// Comments:
+// Harley' Notes:
 // Found types interesting, as I've some experience with Python and Javascript - it's unfamiliar to me to declare variable types.
 // Though a lot of what I've done is unclear and likely to come with repetition, though I could initially set the .read_line as a u32 - but apprently not possible.
 // I ran under the assumption that I had to create a new function, this introduced me to borrowing and ownership. Understood a little bit on this, probably a better way to handle - 
@@ -32,28 +32,7 @@ fn calc_age(u_age: u32){
 // 1. I've not ran this in a loop, so program immediately ends after providing correct answer
 // 2. I've not ran a match to confirm if it is a number and handle the error gracefully.
 
-// ## Convert Age to Days
-
-// Create a function that takes the age and return the age in days.
-
-// #### Examples
-
-// ```text
-// calcAge(65) ➞ 23725
-
-// calcAge(0) ➞ 0
-
-// calcAge(20) ➞ 7300
-// ```
-
-// ### Notes
-
-// - Use 365 days as the length of a year for this challenge. 
-// - Ignore leap years and days between last birthday and now.
-// - Expect only positive integer inputs.
-
-
-// Output:
+// RESULTS:
 // PS C:\Users\Harlski\100-Days-Of-Rust\Week-01\Day-01_Convert-Ages-To-Days\my_convert_ages_to_days> date
 // Monday, 1 January 2024 10:09:19 PM
 
@@ -81,3 +60,27 @@ fn calc_age(u_age: u32){
 // 20
 // Your age in days is: 7300
 // Your age is 20
+
+
+// CHALLENGEE INFO:
+// ## Convert Age to Days
+
+// Create a function that takes the age and return the age in days.
+
+// #### Examples
+
+// ```text
+// calcAge(65) ➞ 23725
+
+// calcAge(0) ➞ 0
+
+// calcAge(20) ➞ 7300
+// ```
+
+// ### Notes
+
+// - Use 365 days as the length of a year for this challenge. 
+// - Ignore leap years and days between last birthday and now.
+// - Expect only positive integer inputs.
+
+

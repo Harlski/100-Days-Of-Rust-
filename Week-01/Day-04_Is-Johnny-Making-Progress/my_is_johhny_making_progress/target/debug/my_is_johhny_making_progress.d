@@ -1,0 +1,1 @@
+N:\100-Days-Of-Rust\Week-01\Day-04_Is-Johnny-Making-Progress\my_is_johhny_making_progress\target\debug\my_is_johhny_making_progress.exe: N:\100-Days-Of-Rust\Week-01\Day-04_Is-Johnny-Making-Progress\my_is_johhny_making_progress\src\main.rs

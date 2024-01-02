@@ -7,18 +7,18 @@ fn main() {
     let nemo_string5:String = "To find Nemo I must !".to_string();
     let nemo_string6:String = "I'm not Nemo, Nemo is Nemo !".to_string();
 
-    find_nemo(nemo_string.clone());
-    find_nemo(nemo_string1.clone());
-    find_nemo(nemo_string2.clone());
-    find_nemo(nemo_string3.clone());
-    find_nemo(nemo_string4.clone());
-    find_nemo(nemo_string5.clone());
-    find_nemo(nemo_string6.clone());
+    find_nemo(&nemo_string);
+    find_nemo(&nemo_string1);
+    find_nemo(&nemo_string2);
+    find_nemo(&nemo_string3);
+    find_nemo(&nemo_string4);
+    find_nemo(&nemo_string5);
+    find_nemo(&nemo_string6);
 }
 
 
 
-fn find_nemo(s: String){
+fn find_nemo(s: &String){
     println!("Searching line: {}", s);
 
     let nemo = "Nemo";

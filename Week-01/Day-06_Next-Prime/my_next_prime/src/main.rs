@@ -17,10 +17,11 @@ fn main() {
 
 fn next_prime(n: String){ 
     let int_n: i64;
+    let i64_limit: i64 = 9223372036854775806;
 
     match n.trim().parse::<i64>() {
         Ok(parsed_n) => {
-            if parsed_n >= 9223372036854775806 {
+            if parsed_n >= i64_limit {
                 println!("Exceeding i64 byte range, please try a smaller number!");
                 return;
             }
@@ -36,7 +37,7 @@ fn next_prime(n: String){
     // println!("Int: {}", int_n); // Using .trim() allows us to use only the number and avoid integer parsing errors.
 
     for count in int_n.. { // Run indefinitely until next prime is found (Or to 9223372036854775806 which is the i64 range limitation)
-        if count >= 9223372036854775806{
+        if count >= i64_limit{
             println!("Exceeding i64 byte range, returning");
             return
         }

@@ -17,8 +17,8 @@ fn main() {
 
 fn next_prime(n: String){ 
     let int_n: i64;
-    let i64_limit: i64 = 9223372036854775806;
-
+    // let i64_limit: i64 = 9223372036854775806;
+    let i64_limit: i64 = std::i64::MAX.wrapping_sub(1);
     match n.trim().parse::<i64>() {
         Ok(parsed_n) => {
             if parsed_n >= i64_limit {

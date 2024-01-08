@@ -1,0 +1,1 @@
+N:\100-Days-Of-Rust\Week-02\Day-08_Letter-Combinations-Of-A-Phone-Number\my_leter_combinations_of_a_phone_number\target\debug\my_leter_combinations_of_a_phone_number.exe: N:\100-Days-Of-Rust\Week-02\Day-08_Letter-Combinations-Of-A-Phone-Number\my_leter_combinations_of_a_phone_number\src\main.rs

@@ -1,9 +1,11 @@
+// DAY 02
 // Man what a challenge.
 // Still a work in progress
 // Feel like I should know how to do this by now, but nothing is sticking.
 // Probably a really simple way to do this, but I'm determined not to influence my answer with an existing one
 // If it takes me an entire week, I'll keep going at this problem.
 
+// Day 03
 // So I am not far off solving this
 // As of this commit, I am able to output the correct answer for 4 digits
 // However any numbers lower currently produces error
@@ -14,47 +16,72 @@
 // I'm think the best might be to set placeholder values and overwrite if the digits.len() condition is met
 // Because if the values are set and digits.len() isn't met then they're not going to be used anyway.
 
+// Day 04
 // So the problem is solved, however I'm trying to fix some issues with the way the digit check is handled.
 // If the number is 1 or 0 then we shouldn't pass value through to return_string_combo
 // I tried restarting main() if the value was 1 or 0, but this seemed to start a new instance of main.
 // Then when submitting a valid number, it would call multiple instances of the R_S_C() function.
 // So calling main() isn't a good option, instead I need to find a way to loop over the stdin() 
-// And if the it isn't a number from 2-9 then we should ask to enter a number again
-use std::io;
+// And if the it isn't a number from 2-9 then we should ask to enter a number againgit add 
 
+// HES DONE IT
+// Finally solved every issue, challenege is complete
+// After so many days of trying, no hints or referring to existing code
+// While this is only day 8, it has already been such a challenge.
+// Considering I'm still here, without referencing ChatGPT and solving all the hurdles by myself
+// I consider this a massive win.
+// Again, I don't know if this the optimal way to complete this, but it works. GG. Notes at bottom.
+
+use std::io;
 use std::any::type_name;
+
 fn type_of<T>(_: T) -> &'static str { // Added for visibility of types when it came to assigning before declaration in the let _char, _chars, _char_len block.
     type_name::<T>()
 }
 
 fn main() { // This function requests the input of a number to return the string combo.
     let mut digits = "".to_string();
-
+    let valid_input: Vec<char> = vec!['2','3','4','5','6','7','8','9'];
     loop {
-        println!("Digits: {:?}", digits);
+        // println!("Digits: {:?}", digits);
         println!("Enter a number to get the letter combinations (1 to 4 digits):");
+
         io::stdin()
             .read_line(&mut digits)
             .expect("Failed to get.");
-            
-        let _digits_are_int: &i32 = match &digits.trim().parse() {
-            Ok(digits) => digits,
-            Err(_) => return,
-        };
 
-        for digit in digits.clone().trim().chars() {
-            if digit == '1' {
-                digits = "2".to_string();
-                println!("Can't use {} sorry!", digit);
-            }
+        let mut escape = false;
+        // println!("Digits length: {} Digits: {}", digits.len(), digits);
+        if digits.len() == 1{
+            let answer = return_string_combo(&digits.trim());
+            println!("Answer: {:?}", answer);
+            break
         }
-        println!("Digits 12: {:?}", &digits.trim());
-        // println!("Answer: {:?}", return_string_combo(&digits.trim()));
-        let answer = return_string_combo(&digits.trim());
-        println!("Answer: {:?}", answer);
-        // println!("Digits: {:?}", &digits);
-        break
+        for digit in digits.clone().trim().chars() {
+            if !valid_input.contains(&digit) {
+                digits = "".to_string();
+                println!("Can't use {:?} sorry! Numbers 2-9 only!", digit);
+                break
+            }
+            escape = true;
+        }
+        if escape {
+            let answer = return_string_combo(&digits.trim());
+            println!("Answer: {:?}", answer);
+            break
+        }
+        // println!("Need to get here");
+        // let _digits_are_int: &i32 = match &digits.trim().parse() {
+        //     Ok(digits) => { println!("Done"); },
+        //     Err(_) => continue,
+        // };
+        // println!("What: {:?}",Ok::<&i32, E>(_digits_are_int));
     }
+
+
+    // println!("Digits 12: {:?}", &digits.trim());
+    // // println!("Answer: {:?}", return_string_combo(&digits.trim()));
+    // // println!("Digits: {:?}", &digits);
 
 
 }
@@ -62,10 +89,14 @@ fn main() { // This function requests the input of a number to return the string
 
 
 fn return_string_combo(digits: &str) -> Vec<String> {
+    // println!("Digits: {:?} Len: {:?}", &digits, &digits.len());
+
     let letters = vec!["abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"];
     let digits = digits.trim().chars().collect::<Vec<_>>();
     let mut v: Vec<String> = Vec::new();
-
+    if digits.len() == 0 {
+        return v;
+    }
     // The variables used for tracking each character for assigned letter.
     let mut i = 0; // First Digit
     let mut j = 0; // Second Digit
@@ -82,6 +113,7 @@ fn return_string_combo(digits: &str) -> Vec<String> {
     // println!("Type i_char, i_chars, i_char_len: {} {:?} {}", type_of(&i_char), type_of(&i_chars), type_of(&i_char_len));
 
     // This block is declared as empty, then if the digits.len() condition is met - the correct values will be filled.
+    
     let (mut j_char, mut k_char, mut l_char) = ("","",""); 
     let (mut j_chars, mut k_chars, mut l_chars): (Vec<char>, Vec<char>, Vec<char>) = (vec![],vec![],vec![]);
     let (mut j_char_len, mut k_char_len, mut l_char_len) = (0, 0, 0);

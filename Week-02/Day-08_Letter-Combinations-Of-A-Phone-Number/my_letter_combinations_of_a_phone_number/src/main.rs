@@ -33,11 +33,10 @@
 // Again, I don't know if this the optimal way to complete this, but it works. GG. Notes at bottom.
 
 use std::io;
-use std::any::type_name;
-
-fn type_of<T>(_: T) -> &'static str { // Added for visibility of types when it came to assigning before declaration in the let _char, _chars, _char_len block.
-    type_name::<T>()
-}
+// use std::any::type_name;
+// fn type_of<T>(_: T) -> &'static str { // Added for visibility of types when it came to assigning before declaration in the let _char, _chars, _char_len block.
+//     type_name::<T>()
+// }
 
 fn main() { // This function requests the input of a number to return the string combo.
     let mut digits = "".to_string();
@@ -113,11 +112,10 @@ fn return_string_combo(digits: &str) -> Vec<String> {
     // println!("Type i_char, i_chars, i_char_len: {} {:?} {}", type_of(&i_char), type_of(&i_chars), type_of(&i_char_len));
 
     // This block is declared as empty, then if the digits.len() condition is met - the correct values will be filled.
-    
     let (mut j_char, mut k_char, mut l_char) = ("","",""); 
     let (mut j_chars, mut k_chars, mut l_chars): (Vec<char>, Vec<char>, Vec<char>) = (vec![],vec![],vec![]);
     let (mut j_char_len, mut k_char_len, mut l_char_len) = (0, 0, 0);
-
+    println!("{}{}{}", j_char, k_char, l_char);
     if digits.len() >= 2 {
         // println!("Should be assigning j");
         j_char = letters[digits[1] as usize - 50];
@@ -262,9 +260,50 @@ fn return_string_combo(digits: &str) -> Vec<String> {
     // }
 
 
-// 2 3 4
-// abc def ghi
-// adg adh adi aeg aeh aei afg afh afi bdg bdh bdi
+// // Harley' Notes
+// When running the final tests and proposed below, I realized that I hadn't integrated the ability to submit and empty string and return []
+// Which looks to be part of the requirement for this challenge.
+
+// You can see results of the test below, it meets and satisfies all the conditions.
+// There was some weirdness with j_char, k_char, l_char throwing warnings that they were never read_line
+// Which isn't the case, as they're read immediately after if the conditions are met correctly
+// So I've just added in a println! statement to hide these warnings.
+// I think there are other ways to hide these warnings, but I don't know how to do it yet and I've had enough of this one challenge
+// Ready to push this to completion, I'll probably run the challenge boundries through ChatGPT to see how it would handle this issue
+// From what I can find, there aren't any others on Github who have completed this far, but I'l ltake another look and compare my results with others
+
+// If this was something that could be completed in a few lines, I'll look silly - but regardless it's a decent learning/practice experience.
+// GG Day 08, I won't miss you.
+
+
+// Results
+
+    // harlski@harlski-ub:~/Documents/100-Days-Of-Rust-/Week-02/Day-08_Letter-Combinations-Of-A-Phone-Number/my_letter_combinations_of_a_phone_number$ date
+    // Thu 11 Jan 2024 02:42:55 PM AEDT
+    // harlski@harlski-ub:~/Documents/100-Days-Of-Rust-/Week-02/Day-08_Letter-Combinations-Of-A-Phone-Number/my_letter_combinations_of_a_phone_number$ cargo run
+    //    Compiling my_leter_combinations_of_a_phone_number v0.1.0 (/home/harlski/Documents/100-Days-Of-Rust-/Week-02/Day-08_Letter-Combinations-Of-A-Phone-Number/my_letter_combinations_of_a_phone_number)
+    //     Finished dev [unoptimized + debuginfo] target(s) in 0.16s
+    //      Running `target/debug/my_leter_combinations_of_a_phone_number`
+    // Enter a number to get the letter combinations (1 to 4 digits):
+    // 23
+    
+    // Length 2
+    // Answer: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
+    // harlski@harlski-ub:~/Documents/100-Days-Of-Rust-/Week-02/Day-08_Letter-Combinations-Of-A-Phone-Number/my_letter_combinations_of_a_phone_number$ cargo run
+    //     Finished dev [unoptimized + debuginfo] target(s) in 0.00s
+    //      Running `target/debug/my_leter_combinations_of_a_phone_number`
+    // Enter a number to get the letter combinations (1 to 4 digits):
+    
+    // Answer: []
+    // harlski@harlski-ub:~/Documents/100-Days-Of-Rust-/Week-02/Day-08_Letter-Combinations-Of-A-Phone-Number/my_letter_combinations_of_a_phone_number$ cargo run
+    //     Finished dev [unoptimized + debuginfo] target(s) in 0.00s
+    //      Running `target/debug/my_leter_combinations_of_a_phone_number`
+    // Enter a number to get the letter combinations (1 to 4 digits):
+    // 2
+    
+    // Length 1
+    // Answer: ["a", "b", "c"]
+    
 // ## Letter Combinations of a Phone Number
 
 // Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in **any order**.

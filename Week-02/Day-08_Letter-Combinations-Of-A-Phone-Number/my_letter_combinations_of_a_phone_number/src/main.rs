@@ -13,103 +13,152 @@
 // I'm not sure what the best practie is to handle this, so I'm just test as I go.
 // I'm think the best might be to set placeholder values and overwrite if the digits.len() condition is met
 // Because if the values are set and digits.len() isn't met then they're not going to be used anyway.
-// 
+
+// So the problem is solved, however I'm trying to fix some issues with the way the digit check is handled.
+// If the number is 1 or 0 then we shouldn't pass value through to return_string_combo
+// I tried restarting main() if the value was 1 or 0, but this seemed to start a new instance of main.
+// Then when submitting a valid number, it would call multiple instances of the R_S_C() function.
+// So calling main() isn't a good option, instead I need to find a way to loop over the stdin() 
+// And if the it isn't a number from 2-9 then we should ask to enter a number again
 use std::io;
+
 use std::any::type_name;
-fn main() {
-    let mut digits = String::new();
-
-    println!("Enter a number to get the letter combinations");
-    io::stdin()
-        .read_line(&mut digits)
-        .expect("Failed to get.");
-
-    for digit in digits.trim().chars() {
-        if digit == '1' {
-            println!("Can't use {} sorry!", digit);
-            main();
-        }
-
-    }
-    println!("Digits: {:?}", &digits);
-    println!("Answer: {:?}", return_string_combo(&digits.trim()));
-}
-
-fn type_of<T>(_: T) -> &'static str {
+fn type_of<T>(_: T) -> &'static str { // Added for visibility of types when it came to assigning before declaration in the let _char, _chars, _char_len block.
     type_name::<T>()
 }
+
+fn main() { // This function requests the input of a number to return the string combo.
+    let mut digits = "".to_string();
+
+    loop {
+        println!("Digits: {:?}", digits);
+        println!("Enter a number to get the letter combinations (1 to 4 digits):");
+        io::stdin()
+            .read_line(&mut digits)
+            .expect("Failed to get.");
+            
+        let _digits_are_int: &i32 = match &digits.trim().parse() {
+            Ok(digits) => digits,
+            Err(_) => return,
+        };
+
+        for digit in digits.clone().trim().chars() {
+            if digit == '1' {
+                digits = "2".to_string();
+                println!("Can't use {} sorry!", digit);
+            }
+        }
+        println!("Digits 12: {:?}", &digits.trim());
+        // println!("Answer: {:?}", return_string_combo(&digits.trim()));
+        let answer = return_string_combo(&digits.trim());
+        println!("Answer: {:?}", answer);
+        // println!("Digits: {:?}", &digits);
+        break
+    }
+
+
+}
+
+
 
 fn return_string_combo(digits: &str) -> Vec<String> {
     let letters = vec!["abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"];
     let digits = digits.trim().chars().collect::<Vec<_>>();
     let mut v: Vec<String> = Vec::new();
 
+    // The variables used for tracking each character for assigned letter.
     let mut i = 0; // First Digit
     let mut j = 0; // Second Digit
     let mut k = 0; // Third Digit
     let mut l = 0; // Fourth Digit
-    println!("Type of i: {}", type_of(&i));
 
-    let i_char = letters[digits[0] as usize - 50]; // We remove 48 for the usize conversion and then 2 to match the number to the index
-    let i_chars = i_char.chars().collect::<Vec<_>>();
-    let i_char_len = i_char.len();
-    // Type i_char, i_chars, i_char_len: &str "alloc::vec::Vec<char>" usize
+    // println!("Type of i: {}", type_of(&i));
+    // 
+
+    let i_char = letters[digits[0] as usize - 50]; // Get the correct number at the index of letters. We remove 48 for the usize conversion and then 2 to match the number to the index
+    let i_chars = i_char.chars().collect::<Vec<_>>(); // Places each letter in its own index.
+    let i_char_len = i_char.len(); // This just helped make it so much easier for readability when writing the looping code. My brain wasn't pieceing it together when trying to do it without this.
+
     // println!("Type i_char, i_chars, i_char_len: {} {:?} {}", type_of(&i_char), type_of(&i_chars), type_of(&i_char_len));
-    let (j_char, k_char, l_char) = ("","","");
-    let (j_chars, k_chars, l_chars): (Vec<char>, Vec<char>, Vec<char>) = vec![];
-    let (j_char_len, k_char_len, l_char_len) = (0, 0, 0);
+
+    // This block is declared as empty, then if the digits.len() condition is met - the correct values will be filled.
+    let (mut j_char, mut k_char, mut l_char) = ("","",""); 
+    let (mut j_chars, mut k_chars, mut l_chars): (Vec<char>, Vec<char>, Vec<char>) = (vec![],vec![],vec![]);
+    let (mut j_char_len, mut k_char_len, mut l_char_len) = (0, 0, 0);
 
     if digits.len() >= 2 {
-        let j_char = letters[digits[1] as usize - 50];
-        let j_chars = j_char.chars().collect::<Vec<_>>();
-        let j_char_len = j_char.len();
+        // println!("Should be assigning j");
+        j_char = letters[digits[1] as usize - 50];
+        j_chars = j_char.chars().collect::<Vec<_>>();
+        j_char_len = j_char.len();
     }  
     if digits.len() >= 3 {
-        let k_char = letters[digits[2] as usize - 50];
-        let k_chars = k_char.chars().collect::<Vec<_>>();
-        let k_char_len = k_char.len();
+        // println!("Should be assigning k");
+        k_char = letters[digits[2] as usize - 50];
+        k_chars = k_char.chars().collect::<Vec<_>>();
+        k_char_len = k_char.len();
     }
     if digits.len() >= 4 {
-        let l_char = letters[digits[3] as usize - 50];
-        let l_chars = l_char.chars().collect::<Vec<_>>();
-        let l_char_len = l_char.len();
+        // println!("Should be assigning l");
+        l_char = letters[digits[3] as usize - 50];
+        l_chars = l_char.chars().collect::<Vec<_>>();
+        l_char_len = l_char.len();
     }
+    //
+    
+    // This code runs the appropriate logic based on the length of digits
+    if digits.len() >= 5 {
+        println!("Digits over 5 in length are not supported, though logically it can be added.");
+    }
+    if digits.len() == 4 {         
+        println!("Length 4" );
+        while i <= i_char_len -1 && j <= j_char_len && k <= k_char_len && l <= l_char_len {
+            v.push(i_chars[i].to_string() + &j_chars[j].to_string() + &k_chars[k].to_string() + &l_chars[l].to_string()); // Pushes the string to vector
+            if l <= l_char_len { l += 1; if l == l_char_len { k += 1; l = 0; } } 
+            if k == k_char_len { j += 1; k = 0}   
+            if j == j_char_len { i += 1; j = 0}  
+        }
+    }
+    if digits.len() == 3 { println!("Length 3" );
+        while i <= i_char_len -1 && j <= j_char_len && k <= k_char_len {
+            v.push(i_chars[i].to_string() + &j_chars[j].to_string() + &k_chars[k].to_string()); // // Pushes the string to vector
+            if k <= k_char_len { k += 1; if k == k_char_len { j += 1; k = 0; } } 
+            if j == j_char_len { i += 1; j = 0}  
+        }
+    }
+    if digits.len() == 2 { println!("Length 2" );
+        while i <= i_char_len -1 && j <= j_char_len {
+            v.push(i_chars[i].to_string() + &j_chars[j].to_string()); // // Pushes the string to vector
+            if j <= j_char_len { j += 1; if j == j_char_len { i += 1; j = 0; } } 
+        }
+    }
+    if digits.len() == 1 { println!("Length 1" );
+        while i <= i_char_len -1 {
+            v.push(i_chars[i].to_string()); // // Pushes the string to vector
+            if i <= i_char_len { i += 1;}
+        }
+    }
+    v // Returns the vector once while loop concludes.
+}
 
+    // println!("i: {}, j:{}, k:{}, l{}", i, j, k ,l);
+    // println!("What the digits: {:?}", digits);
     // let char_at: Vec<_> = letters[i as usize].chars().collect();
 
     // println!("i: {}, j:{}, k:{}, l{}", i, j, k ,l);
     // println!("i_char: {}, j_char: {}, k_char: {}, l_char: {}", i_char, j_char, k_char, l_char);
     // println!("Length: i_char: {:?}", i_char.chars().collect::<Vec<_>>());
     // println!("Length i_char: {}, Length j_char: {}, Length k_char: {}, Length l_char: {}", i_char_len, j_char_len, k_char_len, l_char_len);
-        println!("i: {}, j:{}, k:{}, l{}", i, j, k ,l);
         // println!("string: {}", i_chars[i].to_string() + &j_chars[j].to_string() + &k_chars[k].to_string() + &l_chars[l].to_string());
 
         // println!("We in here");
 
         // if i == i_char_len && j == j_char_len && k == k_char_len && l == l_char_len { println!("Should exit here"); return v; }
-        if digits.len() == 4 { 
-            while i <= i_char_len -1 && j <= j_char_len && k <= k_char_len && l <= l_char_len {
-                v.push(i_chars[i].to_string() + &j_chars[j].to_string() + &k_chars[k].to_string() + &l_chars[l].to_string()); // This pushes current
-                if l <= l_char_len { l += 1; if l == l_char_len { k += 1; l = 0; } } 
-                if k == k_char_len { j += 1; k = 0}   
-                if j == j_char_len { i += 1; j = 0}  
-            }
-
-            println!("Length 4" );
-        }
-        if digits.len() == 3 { println!("Length 3" );}
-        if digits.len() == 2 { println!("Length 2" );}
-        if digits.len() == 1 { println!("Length 1" );}
 
         // if l <= l_char_len { l += 1; if l == l_char_len { k += 1; l = 0; } } 
         // if k == k_char_len { j += 1; k = 0}   
         // if j == j_char_len { i += 1; j = 0}  
    
-    println!("What the digits: {:?}", digits);
-    if digits.len() == 4 { println!("Length 4" );}
-
-    v
-}
     // let mut current = "";
 
     // while i <= digits.len() {

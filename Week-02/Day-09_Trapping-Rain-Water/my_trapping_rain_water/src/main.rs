@@ -1,25 +1,39 @@
 fn main() {
     println!("Hello, world!");
-    let test_case: Vec<u8> = vec![0,6,1,6,4,0];
+    let test_case: Vec<u8> = vec![0,6,1,2,4,0];
     assert_eq!(is_trapped(build_array(test_case)), 5); 
 
 }
 
-fn build_array(lengths:Vec<u8>) -> Vec<u8> {
+fn build_array(list:Vec<u8>) -> Vec<u8> {
     let mut blocks: Vec<u8> = vec![];
     let mut largest: u8 = 0;
     
-    for item in lengths.iter(){ // Get the largest item in the array
+    for item in list.iter(){ // Get the largest item in the array
         println!("i: {}", item);
         if item > &largest {
             largest = *item;
         }
     }
+
+
     println!("Max value in array: {:?}", largest);
     assert_eq!(6, largest);
-    // Input array like [0,6,1,2,4,0]
-    // Largest == n = 6
-    // j == 0
+
+    for i in 0..largest {
+        println!("First loop: {:?}", i);
+        let mut temp_v: Vec<u8> = vec![];
+        for j in &list {
+            if j >= &(i + 1) {
+                println!("1 - j is equal or greater than current height {} < {}", j, &(i+1));
+                // temp_v.extend_from_slice(1 as u8); 
+            } else { 
+                println!("0 - j is less than current height {} > {}", j, &(i+1));
+                // temp_v.extend_from_slice(0 as u8); }
+            }
+        // blocks.push(temp_v);
+        }
+    }
     // for i in [0..6] { if lengths[i] <= n {blocks.push(1)} else {blocks.push(0)} } j += 1
     // keep going til j == n
     // Output Vec like [

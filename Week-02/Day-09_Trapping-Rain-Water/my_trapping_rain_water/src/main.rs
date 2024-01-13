@@ -1,63 +1,85 @@
+// Answer for this one came fairly quickly
+// Compared to Day 08, I had more confidence coming into this
+// While I still feel as though my answer may not be idiomatic
+// I feel as though I may be becoming more familiar with what should come next
+// The only thing I could probably change here is changing the order in which 
+// Build Array pushes the array, but regardless the solution is still reachable without this correct ordering.
+
 fn main() {
-    println!("Hello, world!");
-    let test_case: Vec<u8> = vec![0,6,1,2,4,0];
-    assert_eq!(is_trapped(build_array(test_case)), 5); 
+    let test_case: Vec<u16> = vec![4,2,0,3,2,5];
+
+    println!("Answer: {}", is_trapped(build_array(test_case.clone())));
+    println!("Input: {:?}", test_case);
 
 }
 
-fn build_array(list:Vec<u8>) -> Vec<u8> {
-    let mut blocks: Vec<u8> = vec![];
-    let mut largest: u8 = 0;
+fn build_array(list:Vec<u16>) -> Vec<Vec<u16>> {
     
+    let mut largest: u16 = 0;
     for item in list.iter(){ // Get the largest item in the array
-        println!("i: {}", item);
+        // println!("i: {}", item);
         if item > &largest {
             largest = *item;
         }
     }
-
-
-    println!("Max value in array: {:?}", largest);
-    assert_eq!(6, largest);
-
+    // println!("Max value in array: {:?}", largest);
+    // assert_eq!(6, largest);
+    
+      
+    
+    let mut blocks: Vec<Vec<u16>> = vec![];
     for i in 0..largest {
-        println!("First loop: {:?}", i);
-        let mut temp_v: Vec<u8> = vec![];
+        // println!("First loop: {:?}", i);
+        let mut temp_v: Vec<u16> = vec![];
         for j in &list {
             if j >= &(i + 1) {
-                println!("1 - j is equal or greater than current height {} < {}", j, &(i+1));
-                // temp_v.extend_from_slice(1 as u8); 
+                // println!("1 - j is equal or greater than current height {} < {}", j, &(i+1));
+                temp_v.push(1); 
             } else { 
-                println!("0 - j is less than current height {} > {}", j, &(i+1));
-                // temp_v.extend_from_slice(0 as u8); }
+                // println!("0 - j is less than current height {} > {}", j, &(i+1));
+                temp_v.push(0);  
             }
-        // blocks.push(temp_v);
         }
+        blocks.push(temp_v.clone());
+        // println!("Temp_v: {: ?}", temp_v);
     }
-    // for i in [0..6] { if lengths[i] <= n {blocks.push(1)} else {blocks.push(0)} } j += 1
-    // keep going til j == n
-    // Output Vec like [
-        // [0, 1, 0, 0, 0, 0],
-        // [0, 1, 0 ,0, 0, 0],
-        // [0, 1, 0, 0, 1, 0],
-        // [0, 1, 0, 0, 1, 0],
-        // [0, 1, 0, 1, 1, 0],
-        // [0, 1, 1, 1, 1, 0]
-        // ]
     blocks
-}
+    }
+    
+    fn is_trapped(blocks:Vec<Vec<u16>>) -> u16{
+        let mut count: u16 = 0; // Total count of captured blocks
+        // println!("Blocks: {:?}", blocks);
+        
+        for item in blocks.iter() {
+            let mut may_trap = false; // If true, we start counting the potential trapped blocks
+            let mut temp_count: u16 = 0; // Temporary measure of captured blocks
 
-fn is_trapped(blocks:Vec<u8>) -> u8{
-    let mut count: u8 = 0;
-    // Input vec like         
-        // [0, 1, 0, 0, 0, 0],
-        // [0, 1, 0 ,0, 0, 0],
-        // [0, 1, 0, 0, 1, 0],
-        // [0, 1, 0, 0, 1, 0],
-        // [0, 1, 0, 1, 1, 0],
-        // [0, 1, 1, 1, 1, 0]
-        // ]
-    // Output count like 5
+            for number in item.iter(){
+                let mut none_met = true; // If none of the conditions below are met, then we acknowledge via print. Purely for logging asthetics. 
+                if *number == (1 as u16) && !may_trap { // This condition basically declares that there is a wall and potential for next blocks to be "caught"
+                    may_trap = true;
+                    none_met = false;
+                    println!("{:?} {:?} May Now Trap", item, number);
+                }
+                if may_trap && *number == (0 as u16) { // If there was a wall increase count by one
+                    temp_count += 1;
+                    none_met = false;
+                    println!("{:?} {:?} Increasing Temp Count + 1", item, number);
+                }
+                if *number == (1 as u16) && temp_count > 0 { // If another wall is found with a temp count above 0, then it's considered captured - add temp to count
+                    count += temp_count;
+                    temp_count = 0;
+                    none_met = false;
+                    println!("{:?} {:?} Setting count to Temp Count, Temp_Count to 0, May_Trap now false Count now: {}", item, number, count);
+                } 
+                if none_met {
+                    println!("{:?} {:?} No conditions met.", item, number); // Purely for asthetic logging.
+                }
+            }
+            println!(" "); // Purely for logging asthetics.
+            temp_count = 0; // Reset temp count and may_trap if array ends and no other wall is found.
+            may_trap = false; 
+        }
     count
 }
 
@@ -74,6 +96,14 @@ fn is_trapped(blocks:Vec<u8>) -> u8{
 // 4. for i in range[0..len]{ if i == 1 check(next) {count +=1} if end(1) keep count else drop count
 // 5. Iterate over each array
 // 6. return count
+
+
+// // Results:
+// Answer: 9
+// Input: [4, 2, 0, 3, 2, 5]
+// harlski@harlski-ub:~/Documents/100-Days-Of-Rust-/Week-02/Day-09_Trapping-Rain-Water/my_trapping_rain_water$ date
+// Sun 14 Jan 2024 10:32:03 AM AEDT
+
 
 // ## Trapping Rain Water
 

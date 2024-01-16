@@ -14,7 +14,7 @@ fn count_bst(n: u8) -> i32 {
     let mut i = 1;
     println!("Did we crash here 1");
     
-    for i in i..n {
+    for i in i..n { 
         println!("Count, i: {} n: {}", i, n);
         total_unique += count_bst(i-1)*count_bst(n-i);
         total_unique += 1;

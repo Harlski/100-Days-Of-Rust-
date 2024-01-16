@@ -1,3 +1,21 @@
+// 16/08 - I feel like it should be pretty straight forward, 
+// But it seems like it's meant to be more difficult than it should
+// I don't know if it's necessary for me to implement code for a left / right structure
+// Just need to iterate over every number combination. 
+// Say Input n is 3
+// for range 1 to 3 
+// i = 1 n = 3 ++1
+// call count_bst(2)
+// i = 1 n = 2 ++1
+// call count_bst(1)
+// i = 1 n = 1 ++1
+// call count_bst(0)
+// return 0
+// i = 2 n = 2 ++1
+// call count_bst(0)
+// i = 2 n = 2  /// 
+////// Am thinking it should be a while loop, but really not too sure. Back to work today so not much time to sit down and think about it
+////// Will attempt to tackle again tomorrow 17/01
 fn main() {
     println!("Hello, world!");
     println!("Total count: {}", count_bst(3));
@@ -11,13 +29,13 @@ fn count_bst(n: u8) -> i32 {
     
     let mut total_unique: i32 = 0;
 
-    let mut i = 1;
     println!("Did we crash here 1");
-    
-    for i in i..n { 
-        println!("Count, i: {} n: {}", i, n);
-        total_unique += count_bst(i-1)*count_bst(n-i);
+    let mut i = 0;
+    while i < n{ 
         total_unique += 1;
+        i += 1;
+        println!("Count, i: {} n: {}", i, n);
+        total_unique += count_bst(n-1);
     }
     
     // for num in i..n {
